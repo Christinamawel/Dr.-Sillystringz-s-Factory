@@ -21,5 +21,27 @@ namespace Factory.Controllers
       List<Machine> model = _db.Machines.ToList();
       return View(model);
     }
+
+    public ActionResult Details(int id)
+    {
+      var thisMachine = _db.Machines
+        .Include(Machine => Machine.JoinEntities)
+        .ThenInclude(join => join.Engineer)
+        .FirstOrDefault(Machine => Machine.MachineId == id);
+      return View(thisMachine);
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Machine Machine)
+    {
+      _db.Machines.Add(Machine);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
