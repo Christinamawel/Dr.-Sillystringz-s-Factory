@@ -1,0 +1,16 @@
+@model Factory.Models.Machine
+
+<h4>Add New Machine</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.MachineId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name)
+
+  @Html.LabelFor(model => model.Operational)
+  @Html.EditorFor(model => model.Operational)
+
+  <input type="submit" value="Edit Machine" />
+}

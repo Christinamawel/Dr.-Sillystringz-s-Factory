@@ -26,7 +26,7 @@ namespace Factory.Controllers
     {
       var thisMachine = _db.Machines
         .Include(Machine => Machine.JoinEntities)
-        .ThenInclude(join => join.Engineer)
+        .ThenInclude(join => join.Machine)
         .FirstOrDefault(Machine => Machine.MachineId == id);
       return View(thisMachine);
     }
@@ -40,6 +40,20 @@ namespace Factory.Controllers
     public ActionResult Create(Machine Machine)
     {
       _db.Machines.Add(Machine);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Edit(int id)
+    {
+      Machine thisMachine = _db.Machines.FirstOrDefault(Machine => Machine.MachineId == id);
+      return View(thisMachine);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Machine Machine)
+    {
+      _db.Entry(Machine).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
