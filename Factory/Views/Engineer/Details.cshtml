@@ -5,5 +5,21 @@
 <p>@Html.DisplayNameFor(model => model.Pay): $@Html.DisplayFor(model => model.Pay) per hour</p>
 <p>@Html.DisplayNameFor(model => model.DateStarted): @Html.DisplayFor(model => model.DateStarted.Month)/@Html.DisplayFor(model => model.DateStarted.Day)/@Html.DisplayFor(model => model.DateStarted.Year)</p>
 
+@if (@Model.JoinEntities.Count == 0)
+{
+  <p>This Engineer is not Licened to repair any Machines</p>
+}
+else
+{
+  <h4>Assigned Machines</h4>
+  @foreach(var join in Model.JoinEntities)
+  {
+    <li>
+      @join.Machine.Name
+    </li>
+  }
+}
+
 <p>@Html.ActionLink("Edit this engineer", "Edit", new{ id = Model.EngineerId })</p>
 <p>@Html.ActionLink("Delete this engineer", "Delete", new{ id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Asign a machine to this engineer", "AddMachine", new { id = Model.EngineerId })</p>

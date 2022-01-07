@@ -24,7 +24,10 @@ namespace Factory.Controllers
 
     public ActionResult Details(int id)
     {
-      var thisEngineer = _db.Engineers.FirstOrDefault(Engineer => Engineer.EngineerId == id);
+      var thisEngineer = _db.Engineers
+        .Include(Engineer => Engineer.JoinEntities)
+        .ThenInclude(join => join.Engineer)
+        .FirstOrDefault(Engineer => Engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
@@ -52,6 +55,29 @@ namespace Factory.Controllers
     {
       _db.Entry(engineer).State = EntityState.Modified;
       _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddMachine(int id)
+    {
+      var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "Name");
+      return View(thisEngineer);
+    }
+
+    [HttpPost]
+    public ActionResult AddCourse(Engineer engineer, int MachineId)
+    {
+      bool alreadyExists = _db.EngineerMachine.Any(engineerMachine => engineerMachine.EngineerId == engineer.EngineerId && engineerMachine.MachineId == MachineId);
+      if (MachineId != 0 && !alreadyExists)
+      {
+        _db.EngineerMachine.Add(new EngineerMachine() { MachineId = MachineId, EngineerId = engineer.EngineerId });
+      }
+      _db.SaveChanges();
+      if (alreadyExists)
+      {
+        return RedirectToAction("AddEngineerError");
+      }
       return RedirectToAction("Index");
     }
 
