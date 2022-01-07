@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Registrar.Models
+namespace Factory.Models
 {
-  public class RegistrarContext : DbContext
+  public class FactoryContext : DbContext
   {
+    public DbSet<Engineer> Engineers { get; set; }
 
-    public RegistrarContext(DbContextOptions options) : base(options) { }
+    public FactoryContext(DbContextOptions options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
