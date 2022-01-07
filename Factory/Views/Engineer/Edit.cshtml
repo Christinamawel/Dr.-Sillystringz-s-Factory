@@ -1,0 +1,19 @@
+@model Factory.Models.Engineer
+
+<h4>Add New Engineer</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.EngineerId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name)
+
+  @Html.LabelFor(model => model.Pay)
+  @Html.EditorFor(model => model.Pay)
+
+  @Html.LabelFor(model => model.DateStarted)
+  @Html.TextBoxFor(model => model.DateStarted, "{0:yyyy-MM-dd}", new {@type = "date"})
+
+  <input type="submit" value="Add a new engineer" />
+}
