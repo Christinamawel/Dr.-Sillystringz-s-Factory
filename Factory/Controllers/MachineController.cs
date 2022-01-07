@@ -58,6 +58,34 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
+    public ActionResult AddEngineer(int id)
+    {
+      var thisMachine = _db.Machines.FirstOrDefault(Machine => Machine.MachineId == id);
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      return View(thisMachine);
+    }
+
+    [HttpPost]
+    public ActionResult AddEngineer(Machine Machine, int EngineerId)
+    {
+      bool alreadyExists = _db.EngineerMachine.Any(EngineerMachine => EngineerMachine.MachineId == Machine.MachineId && EngineerMachine.EngineerId == EngineerId);
+      if (EngineerId != 0 && !alreadyExists)
+      {
+        _db.EngineerMachine.Add(new EngineerMachine() { EngineerId = EngineerId, MachineId = Machine.MachineId });
+      }
+      _db.SaveChanges();
+      if (alreadyExists)
+      {
+        return RedirectToAction("AddEngineerError");
+      }
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddEngineerError()
+    {
+      return View();
+    }
+
     public ActionResult Delete(int id)
     {
       Machine thisMachine = _db.Machines.FirstOrDefault(Machine => Machine.MachineId == id);

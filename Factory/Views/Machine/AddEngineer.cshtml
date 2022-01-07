@@ -1,0 +1,13 @@
+@model Factory.Models.Machine
+
+<h2>Add a licenced Engineer</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.MachineId)
+
+  @Html.Label("select engineer")
+  @Html.DropDownList("EngineerId")
+
+  <input type="submit" value="Save">
+}
