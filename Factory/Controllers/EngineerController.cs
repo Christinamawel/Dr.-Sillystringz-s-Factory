@@ -66,7 +66,7 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddCourse(Engineer engineer, int MachineId)
+    public ActionResult AddMachine(Engineer engineer, int MachineId)
     {
       bool alreadyExists = _db.EngineerMachine.Any(engineerMachine => engineerMachine.EngineerId == engineer.EngineerId && engineerMachine.MachineId == MachineId);
       if (MachineId != 0 && !alreadyExists)
@@ -78,6 +78,15 @@ namespace Factory.Controllers
       {
         return RedirectToAction("AddEngineerError");
       }
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteMachine(int joinId)
+    {
+      var joinEntry = _db.EngineerMachine.FirstOrDefault(entry => entry.EngineerMachineId == joinId);
+      _db.EngineerMachine.Remove(joinEntry);
+      _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
