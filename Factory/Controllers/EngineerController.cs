@@ -22,6 +22,12 @@ namespace Factory.Controllers
       return View(model);
     }
 
+    public ActionResult Details(int id)
+    {
+      var thisEngineer = _db.Engineers.FirstOrDefault(Engineer => Engineer.EngineerId == id);
+      return View(thisEngineer);
+    }
+
     public ActionResult Create()
     {
       return View();
@@ -45,6 +51,21 @@ namespace Factory.Controllers
     public ActionResult Edit(Engineer engineer)
     {
       _db.Entry(engineer).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Delete(int id)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      return View(thisEngineer);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      _db.Engineers.Remove(thisEngineer);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

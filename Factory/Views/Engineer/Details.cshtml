@@ -1,0 +1,9 @@
+@model Factory.Models.Engineer
+
+<h2>Engineer Details</h2>
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)<h3>
+<p>@Html.DisplayNameFor(model => model.Pay): $@Html.DisplayFor(model => model.Pay) per hour</p>
+<p>@Html.DisplayNameFor(model => model.DateStarted): @Html.DisplayFor(model => model.DateStarted.Month)/@Html.DisplayFor(model => model.DateStarted.Day)/@Html.DisplayFor(model => model.DateStarted.Year)</p>
+
+<p>@Html.ActionLink("Edit this engineer", "Edit", new{ id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Delete this engineer", "Delete", new{ id = Model.EngineerId })</p>
