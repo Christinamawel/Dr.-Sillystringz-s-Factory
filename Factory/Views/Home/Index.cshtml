@@ -5,6 +5,7 @@
 }
 
 <h1>Dr. Sillystringz Factory tracker</h1>
+<div id="home-eng-div">
 <h4>Engineers:</h4>
 <ul>
 @foreach(Engineer engineer in engineers)
@@ -12,6 +13,8 @@
   <li>@Html.ActionLink($"{engineer.Name}", "Details","Engineer", new { id = engineer.EngineerId })</li>
 }
 </ul>
+</div>
+<div id="home-mach-div">
 <h4>Machines:</h4>
 <ul>
 @foreach(Machine machine in machines)
@@ -19,5 +22,6 @@
   <li>@Html.ActionLink($"{machine.Name}", "Details","Machine", new { id = machine.MachineId })</li>
 }
 </ul>
+</div>
 <p>@Html.ActionLink("Engineers", "Index", "Engineer")</p>
 <p>@Html.ActionLink("Machines", "Index", "Machine")</p>
